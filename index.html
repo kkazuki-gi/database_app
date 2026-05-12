@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UC Case Registration Database - Clinical data collection for JAK inhibitor and S1P modulator studies">
+  <title>UC Case Registry</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Top Navigation ===== -->
+  <nav class="top-nav" id="topNav">
+    <div class="top-nav__brand">
+      <div class="top-nav__logo">UC</div>
+      <div>
+        <div class="top-nav__title">UC Case Registry</div>
+        <div class="top-nav__subtitle">JAK vs S1P Data Collection</div>
+      </div>
+    </div>
+    <div class="top-nav__actions">
+      <div class="view-tabs">
+        <button class="view-tab active" id="tabForm" onclick="App.switchView('form')">＋ New Case</button>
+        <button class="view-tab" id="tabList" onclick="App.switchView('list')">📋 Case List</button>
+      </div>
+      <div class="file-controls">
+        <div class="file-status" id="fileStatus" title="Storage file">
+          <span class="file-status__icon">⚠️</span><span class="file-status__name">Not linked (localStorage)</span>
+        </div>
+        <button class="btn btn--file btn--sm" onclick="App.linkFile()" title="Choose a file to save data">📁 Link File</button>
+        <button class="btn btn--file btn--sm" onclick="App.loadFromFile()" title="Load data from JSON file">📂 Load</button>
+      </div>
+      <button class="btn btn--success btn--sm" id="btnCopyExcel" onclick="App.copyForExcel()">📋 Copy for Excel</button>
+      <button class="btn btn--secondary btn--sm" id="btnExport" onclick="App.exportCSV()">⬇ Export CSV</button>
+      <button class="btn-theme-toggle" id="btnTheme" onclick="App.toggleTheme()" title="Toggle light/dark mode">🌙</button>
+    </div>
+  </nav>
+
+  <!-- ===== Main Container ===== -->
+  <div class="main-container" id="mainContainer">
+
+    <!-- ===== FORM VIEW ===== -->
+    <div class="form-view" id="formView">
+
+      <!-- Step Indicator -->
+      <div class="step-indicator" id="stepIndicator"></div>
+
+      <!-- Form -->
+      <form id="caseForm" autocomplete="off">
+        <!-- Step sections will be rendered by JS -->
+        <div id="step-1" class="form-section"></div>
+        <div id="step-2" class="form-section"></div>
+        <div id="step-3" class="form-section"></div>
+        <div id="step-4" class="form-section"></div>
+        <div id="step-5" class="form-section"></div>
+        <div id="step-6" class="form-section"></div>
+
+        <!-- Step Navigation -->
+        <div class="step-nav" id="stepNav">
+          <button type="button" class="btn btn--secondary" id="btnPrev" onclick="App.prevStep()">← Previous</button>
+          <div class="step-nav__right">
+            <button type="button" class="btn btn--secondary" id="btnSaveDraft" onclick="App.saveDraft()">💾 Save Draft</button>
+            <button type="button" class="btn btn--primary" id="btnNext" onclick="App.nextStep()">Next →</button>
+            <button type="button" class="btn btn--success hidden" id="btnSubmit" onclick="App.submitCase()">✓ Register Case</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ===== LIST VIEW ===== -->
+    <div class="case-list-view" id="listView">
+      <div class="case-list__toolbar">
+        <div class="case-list__search">
+          <input type="text" id="searchInput" placeholder="Search by Patient ID, ADT..." oninput="App.filterCases()">
+        </div>
+        <div class="case-list__count">Total: <span id="caseCount">0</span> cases</div>
+      </div>
+      <div class="data-table-container">
+        <table class="data-table" id="caseTable">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Patient ID</th>
+              <th>ADT</th>
+              <th>ADT Start</th>
+              <th>Age</th>
+              <th>Sex</th>
+              <th>Disease Extent</th>
+              <th>Baseline PRO-2</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="caseTableBody">
+          </tbody>
+        </table>
+        <div class="empty-state hidden" id="emptyState">
+          <div class="empty-state__icon">📂</div>
+          <div class="empty-state__title">No cases registered yet</div>
+          <div class="empty-state__desc">Click "+ New Case" to register your first case.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== Toast Container ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== Confirm Modal ===== -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <div class="modal__title" id="modalTitle">Confirm</div>
+      <div class="modal__desc" id="modalDesc">Are you sure?</div>
+      <div class="modal__actions">
+        <button class="btn btn--secondary btn--sm" onclick="App.closeModal()">Cancel</button>
+        <button class="btn btn--danger btn--sm" id="modalConfirmBtn" onclick="App.confirmAction()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="fields.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
