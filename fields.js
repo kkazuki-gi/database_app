@@ -30,7 +30,8 @@ const CARDIAC_AE_OPTS = [['0','None'],['brady','Bradycardia'],['ECG','ECG abnorm
 const INFECT_AE_OPTS = [['0','None'],['Nasopharyngitis','Nasopharyngitis'],['Sinusitis','Sinusitis'],['COVID-19','COVID-19'],['Serious infection','Serious infection'],['URTI','Upper respiratory tract infection'],['Viral RTI','Respiratory tract infection viral'],['Bronchitis','Bronchitis'],['Influenza','Influenza'],['Gastroenteritis','Gastroenteritis'],['Opportunistic','Opportunistic infection'],['Pneumonia','Pneumonia'],['HSV','Herpes simplex'],['CMV','CMV infection/colitis'],['CDI','C. difficile infection'],['TB','Tuberculosis'],['HBV','HBV reactivation'],['Fungal','Fungal infection'],['PJP','Pneumocystis jirovecii']];
 
 // f(key, label, type, opts, extra)
-function f(key,label,type,opts,extra){return{key,label,type,opts:opts||null,...(extra||{})};}\n
+function f(key,label,type,opts,extra){return{key,label,type,opts:opts||null,...(extra||{})};}
+
 const FIELD_CONFIG = {
   1: [ // Demographics
     { group: 'Identification', fields: [
