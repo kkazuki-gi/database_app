@@ -531,6 +531,78 @@ input.auto-calculated {
   cursor: default;
 }
 
+/* ---- Date with Copy Button ---- */
+.date-with-copy {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.date-with-copy input[type="date"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-copy-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--accent-blue-glow);
+  border: 1px solid rgba(91, 138, 240, 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--accent-blue);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-copy-date:hover {
+  background: rgba(91, 138, 240, 0.2);
+  border-color: var(--accent-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(91, 138, 240, 0.2);
+}
+
+.btn-copy-date:active {
+  transform: translateY(0);
+}
+
+.copy-date-icon {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.copy-date-val {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flash animation when date is copied */
+@keyframes dateCopiedFlash {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); border-color: var(--accent-green); }
+  50% { box-shadow: 0 0 12px 3px rgba(52, 211, 153, 0.3); border-color: var(--accent-green); }
+  100% { box-shadow: none; border-color: var(--border-color); }
+}
+
+input.date-copied {
+  animation: dateCopiedFlash 0.6s ease;
+}
+
+html[data-theme="light"] .btn-copy-date {
+  background: rgba(74, 123, 224, 0.08);
+  border-color: rgba(74, 123, 224, 0.2);
+  color: var(--accent-blue);
+}
+
+html[data-theme="light"] .btn-copy-date:hover {
+  background: rgba(74, 123, 224, 0.15);
+  border-color: var(--accent-blue);
+}
+
 textarea {
   min-height: 80px;
   resize: vertical;

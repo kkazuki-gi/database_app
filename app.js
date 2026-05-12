@@ -97,9 +97,13 @@ const App = {
           : `<input type="number" id="${fd.key}" name="${fd.key}" step="any">`;
         break;
       case 'date':
-        input = fd.auto
-          ? `<input type="date" id="${fd.key}" name="${fd.key}" readonly class="auto-calculated" tabindex="-1">`
-          : `<input type="date" id="${fd.key}" name="${fd.key}">`;
+        if (fd.auto) {
+          input = `<input type="date" id="${fd.key}" name="${fd.key}" readonly class="auto-calculated" tabindex="-1">`;
+        } else if (fd.copyDateFrom) {
+          input = `<div class="date-with-copy"><input type="date" id="${fd.key}" name="${fd.key}"><button type="button" class="btn-copy-date" id="copyBtn-${fd.key}" data-source="${fd.copyDateFrom}" data-target="${fd.key}" onclick="App.copyDateToField('${fd.copyDateFrom}','${fd.key}')" title="Copy week date"><span class="copy-date-icon">📅</span><span class="copy-date-val" id="copyVal-${fd.key}">—</span></button></div>`;
+        } else {
+          input = `<input type="date" id="${fd.key}" name="${fd.key}">`;
+        }
         break;
       case 'select':
         input = `<select id="${fd.key}" name="${fd.key}"><option value="">— Select —</option>`;
@@ -140,6 +144,8 @@ const App = {
       this.runCalc('calcW12Date');
       this.runCalc('calcW26Date');
       this.runCalc('calcW52Date');
+      // Update all copy-date buttons with new calculated dates
+      setTimeout(() => this.updateCopyDateButtons(), 50);
     });
     // Disease Duration
     listen(['disease_diagnosed', 'ADT_start'], () => this.runCalc('calcDiseaseDuration'));
@@ -259,6 +265,40 @@ const App = {
   fmtDate(d) {
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   },
+  fmtDateShort(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return `${d.getMonth()+1}/${d.getDate()}`;
+  },
+
+  // ---- Copy Date Helpers ----
+  copyDateToField(sourceId, targetId) {
+    const val = this.getVal(sourceId);
+    if (!val) {
+      this.toast('Week date not yet calculated. Enter ADT Start first.', 'error');
+      return;
+    }
+    this.setVal(targetId, val);
+    // Flash animation on the target input
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.classList.add('date-copied');
+      setTimeout(() => el.classList.remove('date-copied'), 600);
+    }
+    this.toast(`Date copied: ${val}`, 'success');
+  },
+
+  updateCopyDateButtons() {
+    document.querySelectorAll('.btn-copy-date').forEach(btn => {
+      const sourceId = btn.dataset.source;
+      const targetId = btn.dataset.target;
+      const valEl = document.getElementById(`copyVal-${targetId}`);
+      const sourceVal = this.getVal(sourceId);
+      if (valEl) {
+        valEl.textContent = sourceVal ? this.fmtDateShort(sourceVal) : '—';
+      }
+    });
+  },
 
   // ---- Step Navigation ----
   goToStep(n) {
@@ -335,6 +375,8 @@ const App = {
     // Trigger auto-calculations
     ['calcAge','calcBMI','calcObsEnd','calcBlDate','calcW12Date','calcW26Date','calcW52Date','calcDiseaseDuration','calcBioCount'].forEach(fn => this.runCalc(fn));
     ['bl','w12','w26','w52'].forEach(p => { this.calcPRO2(p); this.calcANC(p); this.calcALC(p); });
+    // Update copy-date buttons
+    setTimeout(() => this.updateCopyDateButtons(), 50);
   },
 
   // ---- Clear Form ----

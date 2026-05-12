@@ -87,7 +87,7 @@ const FIELD_CONFIG = {
       f('bl_PRO2','PRO-2 Score','number',null,{auto:true,calcFn:'calcPRO2',prefix:'bl'}),
     ]},
     { group: 'Laboratory (within 3 months before index date)', voicePrefix: 'bl', fields: [
-      f('bl_lab_date','Date of Assessment','date'),
+      f('bl_lab_date','Date of Assessment','date',null,{copyDateFrom:'bl_date'}),
       f('bl_CRP','CRP','number',null,{unit:'mg/L'}),
       f('bl_fCAL','fCAL','number',null,{unit:'μg/g'}),
       f('bl_Alb','Albumin','number',null,{unit:'g/dL'}),
@@ -98,12 +98,12 @@ const FIELD_CONFIG = {
       f('bl_ALC','Absolute Lymphocyte Count','number',null,{auto:true,calcFn:'calcALC',prefix:'bl'}),
     ]},
     { group: 'Endoscopy (closest to index date)', fields: [
-      f('bl_endo_date','Date of Assessment','date'),
+      f('bl_endo_date','Date of Assessment','date',null,{copyDateFrom:'bl_date'}),
       f('bl_MES','MES','select',MES_OPTS),
       f('bl_UCEIS','UCEIS (Exploratory)','select',UCEIS_OPTS),
     ]},
     { group: 'IUS (Intestinal Ultrasound)', fields: [
-      f('bl_ius_date','Date of Assessment','date'),
+      f('bl_ius_date','Date of Assessment','date',null,{copyDateFrom:'bl_date'}),
       f('bl_IUS_BWT','IUS BWT (mm)','number',null,{hint:'Greatest bowel wall thickening, excl. rectum'}),
       f('bl_IUS_doppler','IUS Color Doppler','radio',DOPPLER_OPTS),
     ]},
@@ -113,13 +113,13 @@ const FIELD_CONFIG = {
       f('w12_date','Week 12 Date','date',null,{auto:true,calcFn:'calcW12Date'}),
     ]},
     { group: 'PRO-2', fields: [
-      f('w12_pro2_date','Date of Assessment (PRO-2)','date'),
+      f('w12_pro2_date','Date of Assessment (PRO-2)','date',null,{copyDateFrom:'w12_date'}),
       f('w12_SFS','SFS','select',SFS_OPTS),
       f('w12_RBS','RBS','select',RBS_OPTS),
       f('w12_PRO2','PRO-2 Score','number',null,{auto:true,calcFn:'calcPRO2',prefix:'w12'}),
     ]},
     { group: 'Laboratory', voicePrefix: 'w12', fields: [
-      f('w12_lab_date','Date of Assessment','date'),
+      f('w12_lab_date','Date of Assessment','date',null,{copyDateFrom:'w12_date'}),
       f('w12_CRP','CRP','number',null,{unit:'mg/L'}),
       f('w12_fCAL','fCAL','number',null,{unit:'μg/g'}),
       f('w12_Alb','Albumin','number',null,{unit:'g/dL'}),
@@ -130,12 +130,12 @@ const FIELD_CONFIG = {
       f('w12_ALC','Absolute Lymphocyte Count','number',null,{auto:true,calcFn:'calcALC',prefix:'w12'}),
     ]},
     { group: 'Endoscopy (Exploratory)', fields: [
-      f('w12_endo_date','Date of Assessment','date'),
+      f('w12_endo_date','Date of Assessment','date',null,{copyDateFrom:'w12_date'}),
       f('w12_MES','MES','select',MES_OPTS),
       f('w12_UCEIS','UCEIS','select',UCEIS_OPTS),
     ]},
     { group: 'IUS (Exploratory)', fields: [
-      f('w12_ius_date','Date of Assessment','date'),
+      f('w12_ius_date','Date of Assessment','date',null,{copyDateFrom:'w12_date'}),
       f('w12_IUS_BWT','IUS BWT (mm)','number'),
       f('w12_IUS_doppler','IUS Color Doppler','radio',DOPPLER_OPTS),
     ]},
@@ -145,13 +145,13 @@ const FIELD_CONFIG = {
       f('w26_date','Week 26 Date','date',null,{auto:true,calcFn:'calcW26Date'}),
     ]},
     { group: 'PRO-2', fields: [
-      f('w26_pro2_date','Date of Assessment (PRO-2)','date'),
+      f('w26_pro2_date','Date of Assessment (PRO-2)','date',null,{copyDateFrom:'w26_date'}),
       f('w26_SFS','SFS','select',SFS_OPTS),
       f('w26_RBS','RBS','select',RBS_OPTS),
       f('w26_PRO2','PRO-2 Score','number',null,{auto:true,calcFn:'calcPRO2',prefix:'w26'}),
     ]},
     { group: 'Laboratory', voicePrefix: 'w26', fields: [
-      f('w26_lab_date','Date of Assessment','date'),
+      f('w26_lab_date','Date of Assessment','date',null,{copyDateFrom:'w26_date'}),
       f('w26_CRP','CRP','number',null,{unit:'mg/L'}),
       f('w26_fCAL','fCAL','number',null,{unit:'μg/g'}),
       f('w26_Alb','Albumin','number',null,{unit:'g/dL'}),
@@ -165,7 +165,7 @@ const FIELD_CONFIG = {
       f('w26_CS_free','CS-free','radio',YN_OPTS,{hint:'Without systemic CS use for ≥12 weeks before Week 26'}),
     ]},
     { group: 'Endoscopy (Exploratory)', fields: [
-      f('w26_endo_date','Date of Assessment','date'),
+      f('w26_endo_date','Date of Assessment','date',null,{copyDateFrom:'w26_date'}),
       f('w26_MES','MES','select',MES_OPTS),
       f('w26_UCEIS','UCEIS','select',UCEIS_OPTS),
     ]},
@@ -175,13 +175,13 @@ const FIELD_CONFIG = {
       f('w52_date','Week 52 Date','date',null,{auto:true,calcFn:'calcW52Date'}),
     ]},
     { group: 'PRO-2', fields: [
-      f('w52_pro2_date','Date of Assessment (PRO-2)','date'),
+      f('w52_pro2_date','Date of Assessment (PRO-2)','date',null,{copyDateFrom:'w52_date'}),
       f('w52_SFS','SFS','select',SFS_OPTS),
       f('w52_RBS','RBS','select',RBS_OPTS),
       f('w52_PRO2','PRO-2 Score','number',null,{auto:true,calcFn:'calcPRO2',prefix:'w52'}),
     ]},
     { group: 'Laboratory', voicePrefix: 'w52', fields: [
-      f('w52_lab_date','Date of Assessment','date'),
+      f('w52_lab_date','Date of Assessment','date',null,{copyDateFrom:'w52_date'}),
       f('w52_CRP','CRP','number',null,{unit:'mg/L'}),
       f('w52_fCAL','fCAL','number',null,{unit:'μg/g'}),
       f('w52_Alb','Albumin','number',null,{unit:'g/dL'}),
@@ -195,14 +195,14 @@ const FIELD_CONFIG = {
       f('w52_CS_free','CS-free','radio',YN_OPTS,{hint:'Without systemic CS use for ≥12 weeks before Week 52'}),
     ]},
     { group: 'Endoscopy', fields: [
-      f('w52_endo_date','Date of Assessment','date'),
+      f('w52_endo_date','Date of Assessment','date',null,{copyDateFrom:'w52_date'}),
       f('w52_MES','MES','select',MES_OPTS),
       f('w52_UCEIS','UCEIS (Exploratory)','select',UCEIS_OPTS),
       f('w52_histologic_remission','Histologic Remission (Exploratory)','radio',YN_OPTS),
       f('w52_biopsy_site','Biopsy Site (Exploratory)','select',BIOPSY_OPTS),
     ]},
     { group: 'IUS (Exploratory)', fields: [
-      f('w52_ius_date','Date of Assessment','date'),
+      f('w52_ius_date','Date of Assessment','date',null,{copyDateFrom:'w52_date'}),
       f('w52_IUS_BWT','IUS BWT (mm)','number'),
       f('w52_IUS_doppler','IUS Color Doppler','radio',DOPPLER_OPTS),
     ]},
