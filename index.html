@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="UC Case Registration Database - Clinical data collection for JAK inhibitor and S1P modulator studies">
-  <title>UC Case Registry</title>
+  <title>UC Case Registry v2</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
     <div class="top-nav__brand">
       <div class="top-nav__logo">UC</div>
       <div>
-        <div class="top-nav__title">UC Case Registry</div>
-        <div class="top-nav__subtitle">JAK vs S1P Data Collection</div>
+        <div class="top-nav__title">UC Case Registry v2</div>
+        <div class="top-nav__subtitle" id="appSubtitle">Completeness-controlled data collection</div>
       </div>
     </div>
     <div class="top-nav__actions">
@@ -32,6 +32,7 @@
       </div>
       <button class="btn btn--success btn--sm" id="btnCopyExcel" onclick="App.copyForExcel()">📋 Copy for Excel</button>
       <button class="btn btn--secondary btn--sm" id="btnExport" onclick="App.exportCSV()">⬇ Export CSV</button>
+      <button class="btn btn--secondary btn--sm" id="btnLang" onclick="App.toggleLanguage()" title="Switch language">日本語</button>
       <button class="btn-theme-toggle" id="btnTheme" onclick="App.toggleTheme()" title="Toggle light/dark mode">🌙</button>
     </div>
   </nav>
@@ -44,6 +45,9 @@
 
       <!-- Step Indicator -->
       <div class="step-indicator" id="stepIndicator"></div>
+
+      <!-- Data quality panel -->
+      <div class="quality-panel" id="qualityPanel"></div>
 
       <!-- Form -->
       <form id="caseForm" autocomplete="off">
@@ -73,21 +77,22 @@
         <div class="case-list__search">
           <input type="text" id="searchInput" placeholder="Search by Patient ID, ADT..." oninput="App.filterCases()">
         </div>
-        <div class="case-list__count">Total: <span id="caseCount">0</span> cases</div>
+        <div class="case-list__count"><span id="caseCountLabel">Total:</span> <span id="caseCount">0</span> <span id="caseCountUnit">cases</span></div>
       </div>
       <div class="data-table-container">
         <table class="data-table" id="caseTable">
           <thead>
             <tr>
-              <th>No.</th>
-              <th>Patient ID</th>
-              <th>ADT</th>
-              <th>ADT Start</th>
-              <th>Age</th>
-              <th>Sex</th>
-              <th>Disease Extent</th>
-              <th>Baseline PRO-2</th>
-              <th>Actions</th>
+              <th id="thNo">No.</th>
+              <th id="thPatient">Patient ID</th>
+              <th id="thAdt">ADT</th>
+              <th id="thAdtStart">ADT Start</th>
+              <th id="thAge">Age</th>
+              <th id="thSex">Sex</th>
+              <th id="thExtent">Disease Extent</th>
+              <th id="thBlPro2">Baseline PRO-2</th>
+              <th id="thQuality">Quality</th>
+              <th id="thActions">Actions</th>
             </tr>
           </thead>
           <tbody id="caseTableBody">
@@ -95,8 +100,8 @@
         </table>
         <div class="empty-state hidden" id="emptyState">
           <div class="empty-state__icon">📂</div>
-          <div class="empty-state__title">No cases registered yet</div>
-          <div class="empty-state__desc">Click "+ New Case" to register your first case.</div>
+          <div class="empty-state__title" id="emptyTitle">No cases registered yet</div>
+          <div class="empty-state__desc" id="emptyDesc">Click "+ New Case" to register your first case.</div>
         </div>
       </div>
     </div>
@@ -112,7 +117,7 @@
       <div class="modal__title" id="modalTitle">Confirm</div>
       <div class="modal__desc" id="modalDesc">Are you sure?</div>
       <div class="modal__actions">
-        <button class="btn btn--secondary btn--sm" onclick="App.closeModal()">Cancel</button>
+        <button class="btn btn--secondary btn--sm" id="modalCancelBtn" onclick="App.closeModal()">Cancel</button>
         <button class="btn btn--danger btn--sm" id="modalConfirmBtn" onclick="App.confirmAction()">Delete</button>
       </div>
     </div>

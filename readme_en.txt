@@ -5,6 +5,10 @@ UC Case Registry
 A clinical data collection web application designed for Ulcerative Colitis (UC) 
 studies, specifically comparing JAK inhibitors and S1P modulators.
 
+Version 2 adds completeness-control features to reduce accidental omissions.
+Tracked fields must be either entered or explicitly confirmed as missing before
+final registration.
+
 [Please see readme_ja.txt for the Japanese version.]
 
 --------------------------------------------------------------------------------
@@ -32,6 +36,23 @@ Features
 
 * Theme Support
   Includes a premium medical dark theme and a light theme, with a toggle button.
+
+* Missing-Data Confirmation
+  Empty fields can be marked with "Confirm missing" to indicate that the blank
+  value was reviewed and is intentional.
+
+* Pre-Registration Completeness Check
+  Register Case detects fields that are empty without a confirmed missing check.
+  Step badges and the Data Quality panel show where unresolved items remain.
+
+* Case-List Quality Status
+  The Case List view includes a Quality column showing unresolved check counts
+  for each registered case.
+
+* English / Japanese Display Toggle
+  The "日本語 / English" button in the top navigation switches static UI text,
+  step names, field labels, option labels, and quality messages. Stored coded
+  values and Excel/CSV export values are not changed.
 
 --------------------------------------------------------------------------------
 How to Use
